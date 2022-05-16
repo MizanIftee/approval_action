@@ -1,7 +1,20 @@
 name: learn-github-actions
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - prod
 jobs:
-  check-bats-version:
+  testing:
+    name: print hello world
     runs-on: ubuntu-latest
     steps:
       - run: echo "hello World"
+
+  Deployment:
+    name: Approval Section
+    runs-on: ubuntu-latest
+    environment:
+      name: production    
+    steps:
+      - run: echo "Approval Has Been Processed"
