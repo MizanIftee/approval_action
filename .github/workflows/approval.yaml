@@ -9,6 +9,10 @@ jobs:
     name: print hello world
     runs-on: ubuntu-latest
     steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: trstringer,acdunnigan      
       - run: echo "hello World"
 
   Deployment:
