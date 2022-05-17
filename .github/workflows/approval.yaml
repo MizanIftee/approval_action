@@ -11,14 +11,14 @@ jobs:
     steps:
       - uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ github.TOKEN }}
-          approvers: trstringer,acdunnigan      
+          secret: ${{ secrets.APPROVAL_TOKEN }}
+          approvers: MizanIftee      
       - run: echo "hello World"
 
-  Deployment:
-    name: Approval Section
-    runs-on: ubuntu-latest
-    environment:
-      name: production    
-    steps:
-      - run: echo "Approval Has Been Processed"
+#  Deployment:
+#    name: Approval Section
+#    runs-on: ubuntu-latest
+#    environment:
+#      name: production    
+#    steps:
+#      - run: echo "Approval Has Been Processed"
