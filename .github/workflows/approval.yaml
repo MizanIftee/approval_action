@@ -11,8 +11,6 @@ jobs:
   dev-stg-deployments:
     name: dev & stage deployment
     runs-on: ubuntu-latest
-    environment:
-      name: dev
     steps:
       - name: Set env vars for Develop
         if: endsWith(github.ref, '/dev')
@@ -28,7 +26,12 @@ jobs:
         
       - name: clear env configs
         run:  echo "Clear Env Configs"
-        
+      - name: approval
+        if: endsWith(github.ref, '/dev')
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.APPROVAL_TOKEN }}
+          approvers: MizanIftee          
       - name: set env configs
         run:  echo "ENV is set"
 
@@ -47,10 +50,7 @@ jobs:
 #    name: print hello world
 #    runs-on: ubuntu-latest
 #    steps:
-#      - uses: trstringer/manual-approval@v1
-#        with:
-#          secret: ${{ secrets.APPROVAL_TOKEN }}
-#          approvers: MizanIftee      
+    
 #      - run: echo "hello World"
 
 #  Deployment:
