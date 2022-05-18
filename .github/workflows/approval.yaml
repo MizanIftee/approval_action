@@ -8,6 +8,7 @@ on:
 
 jobs:
   dev-stg-deployments:
+    name: dev & stage deployment
     runs-on: ubuntu-latest
     steps:
       - name: Set env vars for Develop
@@ -16,7 +17,6 @@ jobs:
           echo "APP_NAME=dev-partner-pos" >> $GITHUB_ENV
           echo "RETRY_FUNCTION_NAME=retryOrder" >> $GITHUB_ENV
           echo "CORE_BACKEND_BASEURL=https://api-partner.dev.cheq.io" >> $GITHUB_ENV
-#          echo "INTERNAL_ACCESS_TOKEN=${{ secrets.DEV_INTERNAL_ACCESS_TOKEN }}" >> $GITHUB_ENV
           echo "OFFLINE_ORDER_COLLECTION=offline_orders" >> $GITHUB_ENV
           echo "SLACK_CHANNEL=dev-deployments" >> $GITHUB_ENV
           
@@ -32,15 +32,14 @@ jobs:
       - name: set env configs
         run:  echo "ENV is set"
 
-  prod deployment:
-#    needs: dev & stg deployments
+  prod-deployment:
     name: Approval Section
     runs-on: ubuntu-latest
     environment:
       name: production    
     steps:
+      - name: set env configs      
       - run: echo "Approval Has Been Processed"
-      - name: deploy firebase function
 
 
 #jobs:
