@@ -10,8 +10,6 @@ jobs:
   dev-stg-deployments:
     runs-on: ubuntu-latest
     steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
       - name: Set env vars for Develop
         if: endsWith(github.ref, '/dev')
         run: |
