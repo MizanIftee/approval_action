@@ -1,4 +1,5 @@
 name: learn-github-actions
+
 on:
   push:
     branches:
@@ -39,7 +40,7 @@ jobs:
       name: production    
     steps:
       - name: set env configs      
-      - run: echo "Approval Has Been Processed"
+        run: echo "Approval Has Been Processed"
 
 
 #jobs:
