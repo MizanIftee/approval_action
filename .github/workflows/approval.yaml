@@ -20,9 +20,6 @@ jobs:
           echo "CORE_BACKEND_BASEURL=https://api-partner.dev.cheq.io" >> $GITHUB_ENV
           echo "OFFLINE_ORDER_COLLECTION=offline_orders" >> $GITHUB_ENV
           echo "SLACK_CHANNEL=dev-deployments" >> $GITHUB_ENV
-          
-      - name: install dependencies
-        run: cd functions/ && npm install
         
       - name: create env json
         run:  echo "Create Env"
