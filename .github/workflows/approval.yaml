@@ -1,7 +1,73 @@
 name: learn-github-actions
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - prod
+
 jobs:
-  check-bats-version:
+  dev & stg deployments:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello World"
+      - name: Git Checkout
+        uses: actions/checkout@v2
+      - name: Set env vars for Develop
+        if: endsWith(github.ref, '/dev')
+        run: |
+          echo "APP_NAME=dev-partner-pos" >> $GITHUB_ENV
+          echo "RETRY_FUNCTION_NAME=retryOrder" >> $GITHUB_ENV
+          echo "CORE_BACKEND_BASEURL=https://api-partner.dev.cheq.io" >> $GITHUB_ENV
+#          echo "INTERNAL_ACCESS_TOKEN=${{ secrets.DEV_INTERNAL_ACCESS_TOKEN }}" >> $GITHUB_ENV
+          echo "OFFLINE_ORDER_COLLECTION=offline_orders" >> $GITHUB_ENV
+          echo "SLACK_CHANNEL=dev-deployments" >> $GITHUB_ENV
+      - name: Set env vars for Staging
+        if: endsWith(github.ref, '/stg')
+        run: |
+          echo "APP_NAME=stg-partner-pos" >> $GITHUB_ENV
+          echo "RETRY_FUNCTION_NAME=retryOrder" >> $GITHUB_ENV
+          echo "CORE_BACKEND_BASEURL=https://api-partner.stg.cheq.io" >> $GITHUB_ENV
+#          echo "INTERNAL_ACCESS_TOKEN=${{ secrets.STG_INTERNAL_ACCESS_TOKEN }}" >> $GITHUB_ENV
+          echo "OFFLINE_ORDER_COLLECTION=offline_orders" >> $GITHUB_ENV
+          echo "SLACK_CHANNEL=stg-deployments" >> $GITHUB_ENV
+          
+      - name: install dependencies
+        run: cd functions/ && npm install
+        
+      - name: create env json
+        run:  echo "Create Env"
+        
+      - name: clear env configs
+        run:  echo "Clear Env Configs"
+        
+      - name: set env configs
+        run:  echo "ENV is set"
+
+  prod deployment:
+#    needs: dev & stg deployments
+    name: Approval Section
+    runs-on: ubuntu-latest
+    environment:
+      name: production    
+    steps:
+      - run: echo "Approval Has Been Processed"
+      - name: deploy firebase function
+
+
+#jobs:
+#  testing:
+#    name: print hello world
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: trstringer/manual-approval@v1
+#        with:
+#          secret: ${{ secrets.APPROVAL_TOKEN }}
+#          approvers: MizanIftee      
+#      - run: echo "hello World"
+
+#  Deployment:
+#    name: Approval Section
+#    runs-on: ubuntu-latest
+#    environment:
+#      name: production    
+#    steps:
+#      - run: echo "Approval Has Been Processed"
